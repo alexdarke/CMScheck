@@ -2,6 +2,7 @@
 A bash script to find outdated CMS installs
 
 Example output:
+```
 [root@someserver CMScheck]# ./CMScheck
 
 What is the base Document root where all vhosts are found?
@@ -23,3 +24,4 @@ Looking for Joomla installs in /var/www/vhosts...
 
 Looking for Drupal installs in /var/www/vhosts...
 None found
+```
