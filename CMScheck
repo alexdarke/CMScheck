@@ -1,0 +1,47 @@
+#!/bin/bash
+
+#Gather the variables
+
+#Get docroot
+echo "";
+echo "What is the base Document root where all vhosts are found?";
+read DOCROOT;
+
+WP_CUR_VERSION="$(curl -s https://wordpress.org/download/ | grep "The latest stable release of WordPress" | awk '{print $9}' | cut -d \) -f 1)";
+JOOMLA_CUR_VERSION="$(curl -s https://www.joomla.org/download.html | grep "latest version" | awk '{print $7}')";
+DRUPAL_CUR_VERSION="$(curl -s https://www.drupal.org/download | grep "<span>Download Drupal" | awk '{print $7}' | cut -d \< -f 1)";
+
+echo "";
+echo "+-----------------------------------------+";
+echo "|    Wordpress current version:  $WP_CUR_VERSION    |";
+echo "|    Joomla current version:     $JOOMLA_CUR_VERSION      |";
+echo "|    Druapl current version:     $DRUPAL_CUR_VERSION    |";
+echo "+-----------------------------------------+";
+
+#check for installs
+
+echo "";
+echo "Looking for Wordpress installs in $DOCROOT...";
+WPCHECK=$(find $DOCROOT -type f -iwholename "*/wp-includes/version.php" -exec grep -H "\$wp_version =" {} \;);
+find $DOCROOT -type f -iwholename "*/wp-includes/version.php" -exec grep -H "\$wp_version =" {} \;
+if [ -z "${WPCHECK}" ]; then
+    echo "None found"
+fi
+
+echo "";
+echo "Looking for Joomla installs in $DOCROOT...";
+JOOMLACHECK=$(find $DOCROOT -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print0 -exec perl -e 'while (<>) { $release = $1 if m/ \$RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/ \$DEV_LEVEL\s+= .(\d+).;/; } print qq( = $release.$dev\n);' {} \;);
+find $DOCROOT -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print0 -exec perl -e 'while (<>) { $release = $1 if m/ \$RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/ \$DEV_LEVEL\s+= .(\d+).;/; } print qq( = $release.$dev\n);' {} \;
+if [ -z "${JOOMLACHECK}" ]; then
+    echo "None found"
+fi
+
+echo "";
+echo "Looking for Drupal installs in $DOCROOT...";
+DRUPALCHECK=$(find $DOCROOT -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \;);
+find $DOCROOT -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \;
+if [ -z "${DRUPALCHECK}" ]; then
+    echo "None found"
+fi
+
+
