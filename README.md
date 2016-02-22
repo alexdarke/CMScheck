@@ -8,11 +8,9 @@ Example output:
 What is the base Document root where all vhosts are found?
 /var/www/vhosts
 
-+-----------------------------------------+
-|    Wordpress current version:  4.4.2    |
-|    Joomla current version:     3.4      |
-|    Druapl current version:     8.0.3    |
-+-----------------------------------------+
+Wordpress current version:  4.4.2
+Joomla current version:     3.4
+Druapl current version:     8.0.3
 
 Looking for Wordpress installs in /var/www/vhosts...
 /var/www/vhosts/domain1.com/httpdocs/wp-includes/version.php:$wp_version = '3.4.1';

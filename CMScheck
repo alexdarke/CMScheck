@@ -12,11 +12,9 @@ JOOMLA_CUR_VERSION="$(curl -s https://www.joomla.org/download.html | grep "lates
 DRUPAL_CUR_VERSION="$(curl -s https://www.drupal.org/download | grep "<span>Download Drupal" | awk '{print $7}' | cut -d \< -f 1)";
 
 echo "";
-echo "+-----------------------------------------+";
-echo "|    Wordpress current version:  $WP_CUR_VERSION    |";
-echo "|    Joomla current version:     $JOOMLA_CUR_VERSION      |";
-echo "|    Druapl current version:     $DRUPAL_CUR_VERSION    |";
-echo "+-----------------------------------------+";
+echo "Wordpress current version:  $WP_CUR_VERSION";
+echo "Joomla current version:     $JOOMLA_CUR_VERSION";
+echo "Druapl current version:     $DRUPAL_CUR_VERSION";
 
 #check for installs
 
@@ -44,4 +42,4 @@ if [ -z "${DRUPALCHECK}" ]; then
     echo "None found"
 fi
 
-
+echo "";
