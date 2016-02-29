@@ -19,25 +19,25 @@ echo "Druapl current version:     $DRUPAL_CUR_VERSION";
 #check for installs
 
 echo "";
-echo "Looking for Wordpress installs in $DOCROOT...";
+echo "Looking for outdated Wordpress installs in $DOCROOT...";
 WPCHECK=$(find $DOCROOT -type f -iwholename "*/wp-includes/version.php" -exec grep -H "\$wp_version =" {} \;);
-find $DOCROOT -type f -iwholename "*/wp-includes/version.php" -exec grep -H "\$wp_version =" {} \;
+find $DOCROOT -type f -iwholename "*/wp-includes/version.php" -exec grep -H "\$wp_version =" {} \; | grep -v $WP_CUR_VERSION
 if [ -z "${WPCHECK}" ]; then
     echo "None found"
 fi
 
 echo "";
-echo "Looking for Joomla installs in $DOCROOT...";
+echo "Looking for outdated Joomla installs in $DOCROOT...";
 JOOMLACHECK=$(find $DOCROOT -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print0 -exec perl -e 'while (<>) { $release = $1 if m/ \$RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/ \$DEV_LEVEL\s+= .(\d+).;/; } print qq( = $release.$dev\n);' {} \;);
-find $DOCROOT -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print0 -exec perl -e 'while (<>) { $release = $1 if m/ \$RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/ \$DEV_LEVEL\s+= .(\d+).;/; } print qq( = $release.$dev\n);' {} \;
+find $DOCROOT -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print0 -exec perl -e 'while (<>) { $release = $1 if m/ \$RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/ \$DEV_LEVEL\s+= .(\d+).;/; } print qq( = $release.$dev\n);' {} \; | grep -v $JOOMLA_CUR_VERSION
 if [ -z "${JOOMLACHECK}" ]; then
     echo "None found"
 fi
 
 echo "";
-echo "Looking for Drupal installs in $DOCROOT...";
+echo "Looking for outdated Drupal installs in $DOCROOT...";
 DRUPALCHECK=$(find $DOCROOT -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \;);
-find $DOCROOT -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \;
+find $DOCROOT -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \; | grep -v $DRUPAL_CUR_VERSION
 if [ -z "${DRUPALCHECK}" ]; then
     echo "None found"
 fi
