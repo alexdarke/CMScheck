@@ -8,7 +8,7 @@ echo "What is the base Document root where all vhosts are found?";
 read DOCROOT;
 
 WP_CUR_VERSION="$(curl -s https://wordpress.org/download/ | grep "The latest stable release of WordPress" | awk '{print $9}' | cut -d \) -f 1)";
-JOOMLA_CUR_VERSION="$(curl -s https://www.joomla.org/download.html | grep "latest version" | awk '{print $7}')";
+JOOMLA_CUR_VERSION="$(curl -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_6_8) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.112 Safari/534.30" -s https://www.joomla.org/download.html | grep "Download Joomla " | awk '{print $10}' | cut -d \< -f 1)";
 DRUPAL_CUR_VERSION="$(curl -s https://www.drupal.org/download | grep "<span>Download Drupal" | awk '{print $7}' | cut -d \< -f 1)";
 
 echo "";
