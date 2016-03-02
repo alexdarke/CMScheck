@@ -29,7 +29,7 @@ fi
 echo "";
 echo "Looking for outdated Joomla installs in $DOCROOT...";
 JOOMLACHECK=$(find $DOCROOT -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print0 -exec perl -e 'while (<>) { $release = $1 if m/ \$RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/ \$DEV_LEVEL\s+= .(\d+).;/; } print qq( = $release.$dev\n);' {} \;);
-find $DOCROOT -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print0 -exec perl -e 'while (<>) { $release = $1 if m/ \$RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/ \$DEV_LEVEL\s+= .(\d+).;/; } print qq( = $release.$dev\n);' {} \; | grep -v $JOOMLA_CUR_VERSION
+find $DOCROOT -type f \( -iwholename '*/libraries/joomla/version.php' -o -iwholename '*/libraries/cms/version.php' -o -iwholename '*/libraries/cms/version/version.php' \) -print0 -exec perl -e 'while (<>) { $release = $1 if m/ \$RELEASE\s+= .([\d.]+).;/; $dev = $1 if m/ \$DEV_LEVEL\s+= .(\d+).;/; } print qq( = $release.$dev\n);' {} \; | grep -av $JOOMLA_CUR_VERSION
 if [ -z "${JOOMLACHECK}" ]; then
     echo "None found"
 fi
@@ -37,7 +37,7 @@ fi
 echo "";
 echo "Looking for outdated Drupal installs in $DOCROOT...";
 DRUPALCHECK=$(find $DOCROOT -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \;);
-find $DOCROOT -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \; | grep -v $DRUPAL_CUR_VERSION
+find $DOCROOT -type f -iwholename "*/modules/system/system.info" -exec grep -H "version = \"" {} \; | grep -av $DRUPAL_CUR_VERSION
 if [ -z "${DRUPALCHECK}" ]; then
     echo "None found"
 fi
